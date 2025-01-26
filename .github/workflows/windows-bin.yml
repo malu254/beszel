@@ -21,16 +21,16 @@ jobs:
         with:
           go-version: '1.18'
 
-      - name: Build Project (both agent and hub)
-        run: |
-          cd beszel
-          set GOOS=windows  # Setze Windows als Zielbetriebssystem
-          set GOARCH=amd64  # Setze AMD64 als Architektur (oder x86, je nach Bedarf)
-          make  # Buildet sowohl Agent als auch Hub
+#      - name: Build Project (both agent and hub)
+  #      run: |
+#          cd beszel
+  #        set GOOS=windows  # Setze Windows als Zielbetriebssystem
+  #        set GOARCH=amd64  # Setze AMD64 als Architektur (oder x86, je nach Bedarf)
+    #      make  # Buildet sowohl Agent als auch Hub
 
       - name: Build Agent Only
         run: |
-          cd beszel
+          cd beszel/beszel
           set GOOS=windows  # Setze Windows als Zielbetriebssystem
           set GOARCH=amd64  # Setze AMD64 als Architektur
           make build-agent  # Nur den Agent bauen

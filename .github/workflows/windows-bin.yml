@@ -19,12 +19,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v3  # Setze Go-Umgebung auf dem Windows-Runner
         with:
-          go-version: '1.18'  
-
-      - name: Clone Beszel Repository
-        run: |
-          git clone  https://github.com/malu254/beszel.git
-          cd beszel/beszel
+          go-version: '1.18'
 
       - name: Build Project (both agent and hub)
         run: |

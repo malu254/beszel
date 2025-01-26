@@ -23,7 +23,7 @@ jobs:
 
       - name: Clone Beszel Repository
         run: |
-          git clone --branch v0.9.1 --depth 1 https://github.com/henrygd/beszel.git
+          git clone  https://github.com/malu254/beszel.git
           cd beszel/beszel
 
       - name: Build Project (both agent and hub)

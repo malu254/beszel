@@ -1,0 +1,54 @@
+name: Build Beszel Project on Windows
+
+on:
+  push:
+    branches:
+      - main  # Trigger beim Push auf den main Branch
+  pull_request:
+    branches:
+      - main  # Trigger beim Erstellen eines PRs zum main Branch
+
+jobs:
+  build:
+    runs-on: windows-latest  # Verwende den Windows-Runner
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2  # Klone das Repository
+
+      - name: Set up Go
+        uses: actions/setup-go@v3  # Setze Go-Umgebung auf dem Windows-Runner
+        with:
+          go-version: '1.18'  
+
+      - name: Clone Beszel Repository
+        run: |
+          git clone --branch v0.9.1 --depth 1 https://github.com/henrygd/beszel.git
+          cd beszel/beszel
+
+      - name: Build Project (both agent and hub)
+        run: |
+          cd beszel/beszel
+          set GOOS=windows  # Setze Windows als Zielbetriebssystem
+          set GOARCH=amd64  # Setze AMD64 als Architektur (oder x86, je nach Bedarf)
+          make  # Buildet sowohl Agent als auch Hub
+
+      - name: Build Agent Only
+        run: |
+          cd beszel/beszel
+          set GOOS=windows  # Setze Windows als Zielbetriebssystem
+          set GOARCH=amd64  # Setze AMD64 als Architektur
+          make build-agent  # Nur den Agent bauen
+
+      - name: Build Hub Only
+        run: |
+          cd beszel/beszel
+          set GOOS=windows  # Setze Windows als Zielbetriebssystem
+          set GOARCH=amd64  # Setze AMD64 als Architektur
+          make build-hub  # Nur den Hub bauen
+          
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: beszel-builds
+          path: malu-254/beszel/build/*  # Lade alle Build-Artefakte hoch, die im Build-Verzeichnis erstellt wurden
